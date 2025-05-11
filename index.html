@@ -1,200 +1,144 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Selamat Tidur, Cinta</title>
+  <meta charset="UTF-8" />
+  <title>Kado Selamat Tidur</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', serif;
       background: #0d1b2a;
-      overflow: hidden;
-      height: 100vh;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .gift-box {
       position: relative;
-      color: white;
+      width: 200px;
+      height: 200px;
+      background: #ff4d6d;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      animation: pulse 2s infinite;
+      transition: opacity 1s ease, transform 1s ease;
     }
 
-    /* Latar bintang */
-    .stars, .hearts {
+    .ribbon {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
+      width: 20px;
+      height: 200px;
+      background: #fff;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
-    .star {
+    .ribbon::before {
+      content: "";
       position: absolute;
-      background: white;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      animation: twinkle 2s infinite ease-in-out alternate;
-    }
-
-    @keyframes twinkle {
-      from { opacity: 0.3; transform: scale(1); }
-      to { opacity: 1; transform: scale(1.4); }
-    }
-
-    /* Hati terbang */
-    .heart {
-      position: absolute;
-      color: rgba(255, 105, 180, 0.8);
-      font-size: 24px;
-      animation: floatHeart 5s ease-in infinite;
-    }
-
-    @keyframes floatHeart {
-      0% {
-        transform: translateY(100vh) scale(0.5);
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1);
-        opacity: 0;
-      }
-    }
-
-    /* Overlay malam */
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 30, 0.6);
-      backdrop-filter: blur(1px);
-      z-index: 1;
-    }
-
-    /* Efek bulan */
-    .moon {
-      position: absolute;
-      top: 50px;
-      right: 80px;
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle, #fff, rgba(255, 255, 255, 0.1));
-      border-radius: 50%;
-      box-shadow: 0 0 60px rgba(255,255,255,0.3);
-      z-index: 1;
-    }
-
-    /* Puisi */
-    .poem-container {
-      z-index: 2;
-      text-align: center;
-      padding: 30px;
-      max-width: 600px;
-      font-size: 1.8em;
-    }
-
-    .line {
-      opacity: 0;
-      animation: showLine 1s forwards;
-    }
-
-    @keyframes showLine {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    .line:nth-child(1) { animation-delay: 1s; }
-    .line:nth-child(2) { animation-delay: 3s; }
-    .line:nth-child(3) { animation-delay: 5s; }
-    .line:nth-child(4) { animation-delay: 7s; }
-    .line:nth-child(5) { animation-delay: 9s; }
-
-    .signature {
-      margin-top: 40px;
-      font-style: italic;
-      font-size: 1.4em;
-      opacity: 0.8;
-      animation: showLine 1s forwards;
-      animation-delay: 11s;
-    }
-
-    /* Pesan romantis berkedip */
-    .floating-message {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 1.4em;
-      color: #ffd3dc;
-      opacity: 0;
-      animation: pulse 3s ease-in-out infinite;
-      z-index: 2;
+      height: 20px;
+      width: 200px;
+      top: 50%;
+      left: -90px;
+      background: #fff;
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      background: #fff;
+      color: #ff4d6d;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ffb3c1;
+    }
+
+    .puisi {
+      display: none;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      line-height: 1.8;
+      font-size: 1.4em;
+      white-space: pre-line;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    .show {
+      display: block;
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <!-- Latar Bintang dan Hati -->
-  <div class="stars" id="stars"></div>
-  <div class="hearts" id="hearts"></div>
+  <div class="container">
+    <div class="gift-box" id="gift">
+      <div class="ribbon"></div>
+      <h2>🎁 Untukmu</h2>
+      <button onclick="bukaKado()">Buka Kado</button>
+    </div>
 
-  <!-- Cahaya Bulan -->
-  <div class="moon"></div>
+    <div class="puisi" id="puisi">
+      <p>
+        Di ujung malam yang tenang,\n
+        Hanya angin yang menyapa pelan.\n
+        Dalam diam, namamu kusebut perlahan,\n
+        Sebagai doa, sebagai rindu yang tak tertahan.\n\n
 
-  <!-- Overlay Gelap -->
-  <div class="overlay"></div>
+        Sayangku,\n
+        Jika malam ini kau lelap dengan senyum,\n
+        Ketahuilah,\n
+        Ada aku yang mengirimkan peluk lewat langit yang diam.\n\n
 
-  <!-- Puisi -->
-  <div class="poem-container">
-    <div class="line">Selamat tidur, cinta kecilku...</div>
-    <div class="line">Biarkan bintang menjagamu malam ini,</div>
-    <div class="line">Dalam mimpi yang lembut dan damai,</div>
-    <div class="line">Ada aku yang selalu merindukanmu di sana,</div>
-    <div class="line">Hingga pagi menyapamu dengan senyum.</div>
-    <div class="line">Rinduku begitu dalam, melampaui waktu,</div>
-    <div class="line">Setiap detik tanpa kamu terasa kosong,</div>
-    <div class="signature">— dari seseorang yang tak pernah lelah mencintaimu</div>
+        Aku rindu,\n
+        Pada tawamu yang hangat, pada suara yang menenangkan hatiku.\n
+        Jarak ini membuatku sadar,\n
+        Betapa berharganya hadirmu.\n\n
+
+        Selamat tidur, cintaku.\n
+        Semoga mimpimu indah malam ini.\n
+        Di dalamnya, aku ada — menemanimu,\n
+        Hingga fajar menyapa kita kembali.
+      </p>
+    </div>
   </div>
 
-  <!-- Pesan Cinta Berkedip -->
-  <div class="floating-message">Fayza '💕' Asrul</div>
-
-  <!-- Musik Latar -->
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_9f0bd1128b.mp3?filename=sleepy-horses-120488.mp3" type="audio/mpeg">
-    Browser kamu tidak mendukung audio.
-  </audio>
-
-  <!-- Script bintang dan hati -->
   <script>
-    // Bintang
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 80; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 2 + 's';
-      starsContainer.appendChild(star);
-    }
+    function bukaKado() {
+      const gift = document.getElementById("gift");
+      const puisi = document.getElementById("puisi");
 
-    // Hati
-    const heartsContainer = document.getElementById('hearts');
-    const heartSymbols = ['❤', '💖', '💕'];
-    for (let i = 0; i < 30; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-      heart.style.left = Math.random() * 100 + '%';
-      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-      heart.style.animationDelay = Math.random() * 3 + 's';
-      heartsContainer.appendChild(heart);
+      gift.style.opacity = "0";
+      gift.style.transform = "scale(0.5)";
+      setTimeout(() => {
+        gift.style.display = "none";
+        puisi.classList.add("show");
+      }, 1000);
     }
   </script>
 </body>

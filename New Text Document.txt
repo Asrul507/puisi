@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kado Untukmu</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d1b2a; /* Sama seperti halaman puisi */
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    .gift-box {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background: #ff4d6d;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .ribbon {
+      position: absolute;
+      width: 20px;
+      height: 200px;
+      background: #fff;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .ribbon::before {
+      content: "";
+      position: absolute;
+      height: 20px;
+      width: 200px;
+      top: 50%;
+      left: -90px;
+      background: #fff;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      background: #fff;
+      color: #ff4d6d;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ffb3c1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gift-box">
+    <div class="ribbon"></div>
+    <h2>🎁 Untukmu</h2>
+    <button onclick="location.href='index.html'">Buka Kado</button>
+  </div>
+
+</body>
+</html>
