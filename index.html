@@ -82,23 +82,47 @@
     }
 
     .puisi {
-      display: none;
+      display: block;
       max-width: 700px;
-      margin: centre;
+      margin: auto;
       padding: 20px;
-      line-height: 1.8;
+      line-height: 2;
       font-size: 1.5em;
       white-space: pre-line;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 2s ease, transform 2s ease;
+      opacity: 1;
+      transform: scale(1);
       z-index: 3;
     }
 
-    .show {
-      display: block;
+    .line {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      margin-bottom: 15px;
+    }
+    .line.show {
       opacity: 1;
-      transform: scale(1);
+    }
+
+    .word {
+      opacity: 0;
+      display: inline-block;
+      margin-right: 5px;
+      font-weight: 500;
+      text-shadow: 0 0 10px #ffb3c1;
+      animation: glowIn 0.5s forwards;
+    }
+
+    @keyframes glowIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+        text-shadow: 0 0 0 transparent;
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        text-shadow: 0 0 10px #ffb3c1, 0 0 20px #ff4d6d;
+      }
     }
 
     .explode {
@@ -178,20 +202,6 @@
       from { opacity: 0.3; transform: scale(1); }
       to { opacity: 1; transform: scale(1.4); }
     }
-
-    /* Firework canvas */
-    .firework-canvas {
-      position: absolute;
-      top: 0;
-      width: 100px;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    #firework-left { left: 0; }
-    #firework-right { right: 0; }
-
   </style>
 </head>
 <body>
@@ -200,9 +210,6 @@
   <div class="hearts" id="hearts"></div>
   <div class="moon"></div>
   <div class="overlay"></div>
-
-  <canvas id="firework-left" class="firework-canvas"></canvas>
-  <canvas id="firework-right" class="firework-canvas"></canvas>
 
   <div class="gift-box" id="gift">
     <div class="ribbon"></div>
@@ -213,30 +220,7 @@
     <button onclick="bukaKado()">Buka Kado</button>
   </div>
 
-  <div class="puisi" id="puisi">
-    <p>
-      Di ujung malam yang tenang,  
-      Hanya angin yang menyapa pelan.  
-      Dalam diam, namamu kusebut perlahan,  
-      Sebagai doa, sebagai rindu yang tak tertahan.  
-
-      Sayangku,  
-      Jika malam ini kau lelap dengan senyum,  
-      Ketahuilah,  
-      Ada aku yang mengirimkan peluk lewat langit yang diam.  
-
-      Aku rindu,  
-      Pada tawamu yang hangat,  
-      Pada suara yang menenangkan hatiku.  
-      Jarak ini membuatku sadar,  
-      Betapa berharganya hadirmu.  
-
-      Selamat tidur, cintaku.  
-      Semoga mimpimu indah malam ini.  
-      Di dalamnya, aku ada — menemanimu,  
-      Hingga fajar menyapa kita kembali.
-    </p>
-  </div>
+  <div class="puisi" id="puisi"></div>
 
   <div class="floating-message">Fayza 💖 Asrul</div>
 
@@ -246,25 +230,64 @@
   </audio>
 
   <script>
+    const puisiText = [
+      "Di ujung malam yang tenang,",
+      "Hanya angin yang menyapa pelan.",
+      "Dalam diam, namamu kusebut perlahan,",
+      "Sebagai doa, sebagai rindu yang tak tertahan.",
+      "",
+      "Sayangku,",
+      "Jika malam ini kau lelap dengan senyum,",
+      "Ketahuilah,",
+      "Ada aku yang mengirimkan peluk lewat langit yang diam.",
+      "",
+      "Aku rindu,",
+      "Pada tawamu yang hangat,",
+      "Pada suara yang menenangkan hatiku.",
+      "Jarak ini membuatku sadar,",
+      "Betapa berharganya hadirmu.",
+      "",
+      "Selamat tidur, cintaku.",
+      "Semoga mimpimu indah malam ini.",
+      "Di dalamnya, aku ada — menemanimu,",
+      "Hingga fajar menyapa kita kembali."
+    ];
+
+    function tampilkanPuisi() {
+      const container = document.getElementById("puisi");
+      puisiText.forEach((lineText, index) => {
+        const line = document.createElement("p");
+        line.className = "line";
+        if (lineText.trim() === "") {
+          line.innerHTML = "&nbsp;";
+        } else {
+          const words = lineText.split(" ");
+          words.forEach((word, wIndex) => {
+            const span = document.createElement("span");
+            span.className = "word";
+            span.style.animationDelay = `${wIndex * 0.2}s`;
+            span.textContent = word;
+            line.appendChild(span);
+          });
+        }
+        container.appendChild(line);
+        setTimeout(() => line.classList.add("show"), index * 1000);
+      });
+    }
+
     function bukaKado() {
       const gift = document.getElementById("gift");
-      const puisi = document.getElementById("puisi");
-
       gift.classList.add("explode");
       document.getElementById("bg-music").muted = false;
 
       setTimeout(() => {
         gift.style.display = "none";
         document.querySelector(".action").style.display = "none";
-        puisi.classList.add("show");
-
-        // Aktifkan kembang api
-        createFireworks("firework-left");
-        createFireworks("firework-right");
+        document.getElementById("puisi").classList.add("show");
+        tampilkanPuisi();
       }, 900);
     }
 
-    // Efek hati
     const heartsContainer = document.getElementById('hearts');
     const heartSymbols = ['❤', '💖', '💕'];
     for (let i = 0; i < 30; i++) {
@@ -277,7 +300,6 @@
       heartsContainer.appendChild(heart);
     }
 
-    // Efek bintang
     const starsContainer = document.getElementById('stars');
     for (let i = 0; i < 100; i++) {
       const star = document.createElement('div');
@@ -286,53 +308,6 @@
       star.style.top = Math.random() * 100 + '%';
       star.style.animationDuration = (1 + Math.random() * 2) + 's';
       starsContainer.appendChild(star);
-    }
-
-    // Fungsi kembang api
-    function createFireworks(canvasId) {
-      const canvas = document.getElementById(canvasId);
-      const ctx = canvas.getContext("2d");
-      canvas.width = 100;
-      canvas.height = window.innerHeight;
-
-      let particles = [];
-
-      function Firework() {
-        this.x = Math.random() * canvas.width;
-        this.y = canvas.height;
-        this.radius = Math.random() * 2 + 1;
-        this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
-        this.speed = Math.random() * 3 + 2;
-        this.angle = Math.PI / 2 + (Math.random() * 0.4 - 0.2);
-        this.life = 60;
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        if (Math.random() < 0.1) {
-          for (let i = 0; i < 10; i++) {
-            particles.push(new Firework());
-          }
-        }
-
-        particles.forEach((p, i) => {
-          const dx = Math.cos(p.angle) * p.speed;
-          const dy = Math.sin(p.angle) * p.speed;
-          p.x += dx;
-          p.y -= dy;
-          p.life--;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-          if (p.life <= 0) particles.splice(i, 1);
-        });
-
-        requestAnimationFrame(animate);
-      }
-
-      animate();
     }
   </script>
 
