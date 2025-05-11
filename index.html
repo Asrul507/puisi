@@ -32,8 +32,15 @@
       align-items: center;
       flex-direction: column;
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-      animation: pulse 2s infinite;
+      animation: shake 2s infinite;
       transition: opacity 1s ease, transform 1s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(1.5deg); }
+      50% { transform: rotate(-1.5deg); }
+      75% { transform: rotate(1deg); }
     }
 
     .ribbon {
@@ -53,12 +60,6 @@
       top: 50%;
       left: -90px;
       background: #fff;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
     }
 
     button {
@@ -83,15 +84,32 @@
       margin: auto;
       padding: 20px;
       line-height: 1.8;
-      font-size: 1.4em;
+      font-size: 1.5em;
       white-space: pre-line;
       opacity: 0;
-      transition: opacity 2s ease;
+      transform: scale(0.95);
+      transition: opacity 2s ease, transform 2s ease;
     }
 
     .show {
       display: block;
       opacity: 1;
+      transform: scale(1);
+    }
+
+    .explode {
+      animation: explode 0.8s forwards;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -128,17 +146,22 @@
     </div>
   </div>
 
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    
+  </audio>
+
   <script>
     function bukaKado() {
       const gift = document.getElementById("gift");
       const puisi = document.getElementById("puisi");
 
-      gift.style.opacity = "0";
-      gift.style.transform = "scale(0.5)";
+      gift.classList.add("explode");
+
       setTimeout(() => {
         gift.style.display = "none";
         puisi.classList.add("show");
-      }, 1000);
+      }, 900);
     }
   </script>
 </body>
