@@ -1,241 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puisi untuk Sayangku</title>
-    <style>
-        /* Reset CSS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <title>Selamat Tidur, sayangku</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background: #0d1b2a;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: white;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #1a1a1a; /* Warna latar belakang malam */
-            overflow: hidden;
-        }
+    /* Latar bintang */
+    .stars, .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-        /* Kontainer utama */
-        .container {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+    .star {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
 
-        /* Latar belakang malam dengan bulan */
-        .night-sky {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://cdn.pixabay.com/photo/2015/09/18/18/26/moon-941161_960_720.jpg') no-repeat center center;
-            background-size: cover;
-            z-index: 1;
-            filter: brightness(0.6);
-        }
+    @keyframes twinkle {
+      from { opacity: 0.3; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.4); }
+    }
 
-        /* Amplop dengan efek 3D */
-        .envelope {
-            position: relative;
-            width: 250px;
-            height: 150px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-            transform-style: preserve-3d;
-            transform: rotateX(30deg);
-            transition: all 0.5s ease;
-            z-index: 2;
-        }
+    /* Hati terbang */
+    .heart {
+      position: absolute;
+      color: rgba(255, 105, 180, 0.8);
+      font-size: 24px;
+      animation: floatHeart 5s ease-in infinite;
+    }
 
-        .envelope.open {
-            transform: rotateX(0deg);
-        }
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
 
-        .envelope::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid #f0c0d0;
-            border-radius: 10px;
-            z-index: -1;
-        }
+    /* Overlay malam */
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 30, 0.6);
+      backdrop-filter: blur(1px);
+      z-index: 1;
+    }
 
-        .envelope .flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            transform-origin: top;
-            transition: all 0.6s ease;
-        }
+    /* Efek bulan */
+    .moon {
+      position: absolute;
+      top: 50px;
+      right: 80px;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #fff, rgba(255, 255, 255, 0.1));
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(255,255,255,0.3);
+      z-index: 1;
+    }
 
-        .envelope.open .flap {
-            transform: rotateX(-180deg);
-        }
+    /* Puisi */
+    .poem-container {
+      z-index: 2;
+      text-align: center;
+      padding: 30px;
+      max-width: 600px;
+    }
 
-        /* Efek hati */
-        .heart {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: red;
-            clip-path: polygon(50% 0%, 0% 38%, 50% 100%, 100% 38%);
-            animation: float 3s ease-in-out infinite;
-        }
+    .line {
+      opacity: 0;
+      animation: showLine 1s forwards;
+    }
 
-        .heart1 { top: 100px; left: 50px; animation-delay: 0s; }
-        .heart2 { top: 200px; left: 150px; animation-delay: 1s; }
-        .heart3 { top: 50px; left: 250px; animation-delay: 2s; }
+    @keyframes showLine {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-50px) rotate(360deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
+    .line:nth-child(1) { animation-delay: 1s; }
+    .line:nth-child(2) { animation-delay: 3s; }
+    .line:nth-child(3) { animation-delay: 5s; }
+    .line:nth-child(4) { animation-delay: 7s; }
+    .line:nth-child(5) { animation-delay: 9s; }
 
-        /* Kembang api */
-        .firework {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: rgba(255, 0, 0, 0.8);
-            border-radius: 50%;
-            animation: fireworkAnimation 1.5s infinite;
-        }
+    .signature {
+      margin-top: 40px;
+      font-style: italic;
+      font-size: 0.9em;
+      opacity: 0.8;
+      animation: showLine 1s forwards;
+      animation-delay: 11s;
+    }
 
-        @keyframes fireworkAnimation {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(2);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0;
-            }
-        }
+    /* Pesan romantis berkedip */
+    .floating-message {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2em;
+      color: #ffd3dc;
+      opacity: 0;
+      animation: pulse 3s ease-in-out infinite;
+      z-index: 2;
+    }
 
-        .firework1 { top: 200px; left: 100px; animation-delay: 0s; }
-        .firework2 { top: 150px; left: 200px; animation-delay: 1s; }
-        .firework3 { top: 300px; left: 250px; animation-delay: 2s; }
-
-        /* Teks puisi */
-        .poem {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-            color: #fff; /* Warna teks putih untuk kontras */
-            text-align: center;
-            display: none;
-            z-index: 3;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Menambahkan bayangan untuk teks */
-        }
-
-        .poem p {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        .poem p:nth-child(1) { animation-delay: 0.5s; }
-        .poem p:nth-child(2) { animation-delay: 1s; }
-        .poem p:nth-child(3) { animation-delay: 1.5s; }
-        .poem p:nth-child(4) { animation-delay: 2s; }
-        .poem p:nth-child(5) { animation-delay: 2.5s; }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Tombol Buka */
-        .open-btn {
-            position: absolute;
-            bottom: 50px;
-            font-size: 18px;
-            padding: 10px 20px;
-            background-color: #ff6f61;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 4;
-        }
-
-        .open-btn:hover {
-            background-color: #f18c6b;
-        }
-
-    </style>
+    @keyframes pulse {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="night-sky"></div>
+  <!-- Latar Bintang dan Hati -->
+  <div class="stars" id="stars"></div>
+  <div class="hearts" id="hearts"></div>
 
-        <!-- Amplop -->
-        <div class="envelope">
-            <div class="flap"></div>
-        </div>
+  <!-- Cahaya Bulan -->
+  <div class="moon"></div>
 
-        <!-- Tombol untuk membuka amplop -->
-        <button class="open-btn" onclick="openEnvelope()">Buka Amplop</button>
+  <!-- Overlay Gelap -->
+  <div class="overlay"></div>
 
-        <!-- Teks puisi -->
-        <div class="poem" id="poemText">
-            <p>Untuk Sayangku,</p>
-            <p>Bersama bulan yang indah,</p>
-            <p>Kita temui kehangatan malam,</p>
-            <p>Dalam pelukan cahaya yang lembut,</p>
-            <p>Dan hati yang selalu merindu.</p>
-        </div>
+  <!-- Puisi -->
+  <div class="poem-container">
+    <div class="line">Selamat tidur, cintaku...</div>
+    <div class="line">Biarkan bintang menjagamu malam ini,</div>
+    <div class="line">Dalam mimpi yang lembut dan damai,</div>
+    <div class="line">Ada aku yang selalu merindukanmu di sana,</div>
+    <div class="line">Hingga pagi menyapamu dengan senyum.</div>
+    <div class="signature">— dari seseorang yang tak pernah lelah mencintaimu</div>
+  </div>
 
-        <!-- Efek Kembang Api -->
-        <div class="firework firework1"></div>
-        <div class="firework firework2"></div>
-        <div class="firework firework3"></div>
+  <!-- Pesan Cinta Berkedip -->
+  <div class="floating-message">Aku mencintaimu, selalu...</div>
 
-        <!-- Efek Hati -->
-        <div class="heart heart1"></div>
-        <div class="heart heart2"></div>
-        <div class="heart heart3"></div>
-    </div>
+  <!-- Musik Latar -->
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_9f0bd1128b.mp3?filename=sleepy-horses-120488.mp3" type="audio/mpeg">
+    Browser kamu tidak mendukung audio.
+  </audio>
 
-    <script>
-        // Fungsi untuk membuka amplop dan menampilkan puisi
-        function openEnvelope() {
-            document.querySelector('.envelope').classList.add('open');
-            document.getElementById('poemText').style.display = 'block';
-            document.getElementById('poemText').style.opacity = '1';
+  <!-- Script bintang dan hati -->
+  <script>
+    // Bintang
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 2 + 's';
+      starsContainer.appendChild(star);
+    }
 
-            // Trigger kembang api
-            setTimeout(() => {
-                document.querySelector('.firework1').style.animationPlayState = 'running';
-                document.querySelector('.firework2').style.animationPlayState = 'running';
-                document.querySelector('.firework3').style.animationPlayState = 'running';
-            }, 500);
-        }
-    </script>
+    // Hati
+    const heartsContainer = document.getElementById('hearts');
+    const heartSymbols = ['❤', '💖', '💕'];
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      heart.style.animationDelay = Math.random() * 3 + 's';
+      heartsContainer.appendChild(heart);
+    }
+  </script>
 </body>
 </html>
