@@ -18,74 +18,6 @@
       color: white;
     }
 
-    /* Latar bintang */
-    .stars, .hearts {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .star {
-      position: absolute;
-      background: white;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      animation: twinkle 2s infinite ease-in-out alternate;
-    }
-
-    @keyframes twinkle {
-      from { opacity: 0.3; transform: scale(1); }
-      to { opacity: 1; transform: scale(1.4); }
-    }
-
-    /* Hati terbang */
-    .heart {
-      position: absolute;
-      color: rgba(255, 105, 180, 0.8);
-      font-size: 36px;
-      animation: floatHeart 5s ease-in infinite;
-    }
-
-    @keyframes floatHeart {
-      0% {
-        transform: translateY(100vh) scale(0.5);
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1);
-        opacity: 0;
-      }
-    }
-
-    /* Overlay malam */
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 30, 0.6);
-      backdrop-filter: blur(1px);
-      z-index: 1;
-    }
-
-    /* Efek bulan */
-    .moon {
-      position: absolute;
-      top: 50px;
-      right: 80px;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, #fff, rgba(255, 255, 255, 0.1));
-      border-radius: 50%;
-      box-shadow: 0 0 60px rgba(255,255,255,0.3);
-      z-index: 1;
-    }
-
     /* Puisi */
     .poem-container {
       z-index: 2;
@@ -136,24 +68,6 @@
       animation-delay: 34s;
     }
 
-    /* Pesan romantis berkedip */
-    .floating-message {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 1.5em;
-      color: #ffd3dc;
-      opacity: 0;
-      animation: pulse 3s ease-in-out infinite;
-      z-index: 2;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
-    }
-
     /* Fade-in effect */
     @keyframes fadeIn {
       0% { opacity: 0; }
@@ -163,16 +77,6 @@
   </style>
 </head>
 <body>
-  <!-- Latar Bintang dan Hati -->
-  <div class="stars" id="stars"></div>
-  <div class="hearts" id="hearts"></div>
-
-  <!-- Cahaya Bulan -->
-  <div class="moon"></div>
-
-  <!-- Overlay Gelap -->
-  <div class="overlay"></div>
-
   <!-- Puisi -->
   <div class="poem-container">
     <div class="line">Selamat tidur, cinta kecilku...</div>
@@ -185,38 +89,11 @@
     <div class="signature">— dari seseorang yang tak pernah lelah mencintaimu</div>
   </div>
 
-  <!-- Pesan Cinta Berkedip -->
-  <div class="floating-message">Aku mencintaimu, selalu...</div>
-
   <!-- Musik Latar -->
   <audio autoplay loop>
     <source src="https://www.bensound.com/bensound-music/bensound-lullaby.mp3" type="audio/mpeg">
     Browser kamu tidak mendukung audio.
   </audio>
 
-  <!-- Script bintang dan hati -->
-  <script>
-    // Bintang
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 80; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 2 + 's';
-      starsContainer.appendChild(star);
-    }
-
-    // Hati
-    const heartsContainer = document.getElementById('hearts');
-    const heartSymbols = ['❤', '💖', '💕'];
-    for (let i = 0; i < 30; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-      heart.style.left = Math.random() * 100 + '%';
-      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-      heart.style.animationDelay = Math.random() * 3 + 's';
-      heartsContainer.appendChild(heart);
-    }
-  </
+</body>
+</html>
