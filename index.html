@@ -179,6 +179,19 @@
       to { opacity: 1; transform: scale(1.4); }
     }
 
+    /* Firework canvas */
+    .firework-canvas {
+      position: absolute;
+      top: 0;
+      width: 100px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    #firework-left { left: 0; }
+    #firework-right { right: 0; }
+
   </style>
 </head>
 <body>
@@ -187,6 +200,9 @@
   <div class="hearts" id="hearts"></div>
   <div class="moon"></div>
   <div class="overlay"></div>
+
+  <canvas id="firework-left" class="firework-canvas"></canvas>
+  <canvas id="firework-right" class="firework-canvas"></canvas>
 
   <div class="gift-box" id="gift">
     <div class="ribbon"></div>
@@ -241,9 +257,14 @@
         gift.style.display = "none";
         document.querySelector(".action").style.display = "none";
         puisi.classList.add("show");
+
+        // Aktifkan kembang api
+        createFireworks("firework-left");
+        createFireworks("firework-right");
       }, 900);
     }
 
+    // Efek hati
     const heartsContainer = document.getElementById('hearts');
     const heartSymbols = ['❤', '💖', '💕'];
     for (let i = 0; i < 30; i++) {
@@ -256,6 +277,7 @@
       heartsContainer.appendChild(heart);
     }
 
+    // Efek bintang
     const starsContainer = document.getElementById('stars');
     for (let i = 0; i < 100; i++) {
       const star = document.createElement('div');
@@ -264,6 +286,53 @@
       star.style.top = Math.random() * 100 + '%';
       star.style.animationDuration = (1 + Math.random() * 2) + 's';
       starsContainer.appendChild(star);
+    }
+
+    // Fungsi kembang api
+    function createFireworks(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext("2d");
+      canvas.width = 100;
+      canvas.height = window.innerHeight;
+
+      let particles = [];
+
+      function Firework() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height;
+        this.radius = Math.random() * 2 + 1;
+        this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        this.speed = Math.random() * 3 + 2;
+        this.angle = Math.PI / 2 + (Math.random() * 0.4 - 0.2);
+        this.life = 60;
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (Math.random() < 0.1) {
+          for (let i = 0; i < 10; i++) {
+            particles.push(new Firework());
+          }
+        }
+
+        particles.forEach((p, i) => {
+          const dx = Math.cos(p.angle) * p.speed;
+          const dy = Math.sin(p.angle) * p.speed;
+          p.x += dx;
+          p.y -= dy;
+          p.life--;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          if (p.life <= 0) particles.splice(i, 1);
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
     }
   </script>
 
