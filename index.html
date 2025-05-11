@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Selamat Tidur, sayangku</title>
+  <title>Selamat Tidur, Cintakuuu</title>
   <style>
     body {
       margin: 0;
@@ -45,7 +45,7 @@
     .heart {
       position: absolute;
       color: rgba(255, 105, 180, 0.8);
-      font-size: 24px;
+      font-size: 36px;
       animation: floatHeart 5s ease-in infinite;
     }
 
@@ -78,8 +78,8 @@
       position: absolute;
       top: 50px;
       right: 80px;
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       background: radial-gradient(circle, #fff, rgba(255, 255, 255, 0.1));
       border-radius: 50%;
       box-shadow: 0 0 60px rgba(255,255,255,0.3);
@@ -91,32 +91,45 @@
       z-index: 2;
       text-align: center;
       padding: 30px;
-      max-width: 600px;
+      max-width: 700px;
+      font-size: 1.5em; /* Membesarkan ukuran font */
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      padding: 40px;
+      animation: fadeIn 3s ease-out;
     }
 
+    /* Efek menulis */
     .line {
       opacity: 0;
-      animation: showLine 1s forwards;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typewriter 4s steps(40) 1s forwards;
     }
 
-    @keyframes showLine {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
     }
 
-    .line:nth-child(1) { animation-delay: 1s; }
-    .line:nth-child(2) { animation-delay: 3s; }
-    .line:nth-child(3) { animation-delay: 5s; }
-    .line:nth-child(4) { animation-delay: 7s; }
-    .line:nth-child(5) { animation-delay: 9s; }
+    .line:nth-child(1) { animation-delay: 2s; }
+    .line:nth-child(2) { animation-delay: 5s; }
+    .line:nth-child(3) { animation-delay: 8s; }
+    .line:nth-child(4) { animation-delay: 11s; }
+    .line:nth-child(5) { animation-delay: 14s; }
+    .line:nth-child(6) { animation-delay: 17s; }
+    .line:nth-child(7) { animation-delay: 20s; }
 
     .signature {
       margin-top: 40px;
       font-style: italic;
-      font-size: 0.9em;
+      font-size: 1.2em;
       opacity: 0.8;
       animation: showLine 1s forwards;
-      animation-delay: 11s;
+      animation-delay: 23s;
     }
 
     /* Pesan romantis berkedip */
@@ -125,7 +138,7 @@
       bottom: 20px;
       width: 100%;
       text-align: center;
-      font-size: 1.2em;
+      font-size: 1.5em;
       color: #ffd3dc;
       opacity: 0;
       animation: pulse 3s ease-in-out infinite;
@@ -136,6 +149,13 @@
       0%, 100% { opacity: 0; }
       50% { opacity: 1; }
     }
+
+    /* Fade-in effect */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
@@ -156,6 +176,8 @@
     <div class="line">Dalam mimpi yang lembut dan damai,</div>
     <div class="line">Ada aku yang selalu merindukanmu di sana,</div>
     <div class="line">Hingga pagi menyapamu dengan senyum.</div>
+    <div class="line">Rinduku begitu dalam, melampaui waktu,</div>
+    <div class="line">Setiap detik tanpa kamu terasa kosong,</div>
     <div class="signature">— dari seseorang yang tak pernah lelah mencintaimu</div>
   </div>
 
@@ -164,7 +186,7 @@
 
   <!-- Musik Latar -->
   <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_9f0bd1128b.mp3?filename=sleepy-horses-120488.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     Browser kamu tidak mendukung audio.
   </audio>
 
