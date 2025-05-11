@@ -4,25 +4,20 @@
   <meta charset="UTF-8" />
   <title>Kado Selamat Tidur</title>
   <style>
-    html, body {
-  margin: 0;
-  padding: 0;
-  background: #0d1b2a;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 60px 20px;
-  position: relative;
-  z-index: 2;
-}
-
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d1b2a;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
 
     .gift-box {
       width: 200px;
@@ -32,7 +27,7 @@ main {
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
       animation: shake 2s infinite;
       position: relative;
-      z-index: 3;
+      z-index: 2;
     }
 
     @keyframes shake {
@@ -90,7 +85,7 @@ main {
     .puisi {
       display: none;
       max-width: 700px;
-      margin: 40px auto 20px;
+      margin: auto;
       padding: 20px;
       line-height: 1.8;
       font-size: 1.5em;
@@ -99,6 +94,7 @@ main {
       transform: scale(0.95);
       transition: opacity 2s ease, transform 2s ease;
       z-index: 3;
+      position: relative;
     }
 
     .show {
@@ -117,7 +113,7 @@ main {
     }
 
     .floating-message {
-      position: fixed;
+      position: absolute;
       bottom: 20px;
       width: 100%;
       text-align: center;
@@ -128,7 +124,7 @@ main {
     }
 
     .overlay {
-      position: fixed;
+      position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0, 0, 30, 0.6);
@@ -137,7 +133,7 @@ main {
     }
 
     .moon {
-      position: fixed;
+      position: absolute;
       top: 50px;
       right: 80px;
       width: 100px;
@@ -163,7 +159,7 @@ main {
     }
 
     .stars, .hearts {
-      position: fixed;
+      position: absolute;
       width: 100%;
       height: 100%;
       z-index: 0;
@@ -184,6 +180,30 @@ main {
       from { opacity: 0.3; transform: scale(1); }
       to { opacity: 1; transform: scale(1.4); }
     }
+
+    /* Menambahkan efek animasi untuk puisi berjalan dari bawah ke atas */
+    .line {
+      display: block;
+      transform: translateY(100%);
+      animation: slideUp 15s linear infinite;
+    }
+
+    @keyframes slideUp {
+      0% { transform: translateY(100%); }
+      100% { transform: translateY(-100%); }
+    }
+
+    .word {
+      display: inline-block;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeIn 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -193,41 +213,16 @@ main {
   <div class="moon"></div>
   <div class="overlay"></div>
 
-  <main>
-    <div class="gift-box" id="gift">
-      <div class="ribbon"></div>
-    </div>
+  <div class="gift-box" id="gift">
+    <div class="ribbon"></div>
+  </div>
 
-    <div class="action">
-      <h2>🎁 Untukmu</h2>
-      <button onclick="bukaKado()">Buka Kado</button>
-    </div>
+  <div class="action">
+    <h2>🎁 Untukmu</h2>
+    <button onclick="bukaKado()">Buka Kado</button>
+  </div>
 
-    <div class="puisi" id="puisi">
-      <p>
-        Di ujung malam yang tenang,  
-        Hanya angin yang menyapa pelan.  
-        Dalam diam, namamu kusebut perlahan,  
-        Sebagai doa, sebagai rindu yang tak tertahan.  
-
-        Sayangku,  
-        Jika malam ini kau lelap dengan senyum,  
-        Ketahuilah,  
-        Ada aku yang mengirimkan peluk lewat langit yang diam.  
-
-        Aku rindu,  
-        Pada tawamu yang hangat,  
-        Pada suara yang menenangkan hatiku.  
-        Jarak ini membuatku sadar,  
-        Betapa berharganya hadirmu.  
-
-        Selamat tidur, cintaku.  
-        Semoga mimpimu indah malam ini.  
-        Di dalamnya, aku ada — menemanimu,  
-        Hingga fajar menyapa kita kembali.
-      </p>
-    </div>
-  </main>
+  <div class="puisi" id="puisi"></div>
 
   <div class="floating-message">Fayza 💖 Asrul</div>
 
@@ -237,18 +232,60 @@ main {
   </audio>
 
   <script>
+    function tampilkanPuisi() {
+      const container = document.getElementById("puisi");
+      const puisiText = [
+        "Di ujung malam yang tenang,",
+        "Hanya angin yang menyapa pelan.",
+        "Dalam diam, namamu kusebut perlahan,",
+        "Sebagai doa, sebagai rindu yang tak tertahan.",
+        "",
+        "Sayangku,",
+        "Jika malam ini kau lelap dengan senyum,",
+        "Ketahuilah,",
+        "Ada aku yang mengirimkan peluk lewat langit yang diam.",
+        "",
+        "Aku rindu,",
+        "Pada tawamu yang hangat,",
+        "Pada suara yang menenangkan hatiku.",
+        "Jarak ini membuatku sadar,",
+        "Betapa berharganya hadirmu.",
+        "",
+        "Selamat tidur, cintaku.",
+        "Semoga mimpimu indah malam ini.",
+        "Di dalamnya, aku ada — menemanimu,",
+        "Hingga fajar menyapa kita kembali."
+      ];
+
+      puisiText.forEach((lineText, index) => {
+        const line = document.createElement("p");
+        line.className = "line";
+        if (lineText.trim() === "") {
+          line.innerHTML = "&nbsp;"; // kosongkan tapi tetap beri ruang
+        } else {
+          const words = lineText.split(" ");
+          words.forEach((word, wIndex) => {
+            const span = document.createElement("span");
+            span.className = "word";
+            span.style.animationDelay = `${wIndex * 0.2}s`;
+            span.textContent = word;
+            line.appendChild(span);
+          });
+        }
+        container.appendChild(line);
+      });
+    }
+
     function bukaKado() {
       const gift = document.getElementById("gift");
-      const puisi = document.getElementById("puisi");
-
       gift.classList.add("explode");
       document.getElementById("bg-music").muted = false;
 
       setTimeout(() => {
         gift.style.display = "none";
         document.querySelector(".action").style.display = "none";
-        puisi.classList.add("show");
-        window.scrollTo({ top: puisi.offsetTop, behavior: 'smooth' });
+        document.getElementById("puisi").classList.add("show");
+        tampilkanPuisi();
       }, 900);
     }
 
